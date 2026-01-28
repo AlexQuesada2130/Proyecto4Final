@@ -2,6 +2,7 @@ import dao.implementaciones.*;
 import entity.*;
 import conBD.ConexionBD;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.Scanner;
@@ -92,7 +93,7 @@ public class Proyecto {
             Alquiler nuevo = new Alquiler();
             nuevo.setIdCliente(cliente);
             nuevo.setIdVehiculo(vehiculo);
-            nuevo.setFechaContrato(Instant.now());
+            nuevo.setFechaContrato(new Timestamp(System.currentTimeMillis()));
 
             if (alquilerDAO.insertar(nuevo)) {
                 System.out.println("Alquiler realizado.");

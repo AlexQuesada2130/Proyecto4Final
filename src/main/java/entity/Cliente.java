@@ -4,16 +4,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "cliente")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
+
     private String nombre;
     private String apellidos;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alquiler> alquileres;
 
     public Cliente() {}
@@ -41,6 +40,8 @@ public class Cliente {
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
+    public List<Alquiler> getAlquileres() { return alquileres; }
+    public void setAlquileres(List<Alquiler> alquileres) { this.alquileres = alquileres; }
 
     @Override
     public String toString() {

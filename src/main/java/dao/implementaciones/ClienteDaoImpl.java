@@ -3,9 +3,9 @@ package dao.implementaciones;
 import conBD.ConexionBD;
 import dao.ClienteDAO;
 import entity.Cliente;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-
 import java.util.List;
 
 public class ClienteDaoImpl implements ClienteDAO {
@@ -70,7 +70,7 @@ public class ClienteDaoImpl implements ClienteDAO {
     public boolean eliminar(int id) {
         EntityManager em = ConexionBD.getEntityManager();
         try {
-            // Verificación de integridad: ¿Tiene alquileres?
+
             Long count = em.createQuery("SELECT COUNT(a) FROM Alquiler a WHERE a.idCliente.id = :id", Long.class)
                     .setParameter("id", id)
                     .getSingleResult();

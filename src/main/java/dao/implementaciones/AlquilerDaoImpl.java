@@ -10,7 +10,6 @@ import java.util.List;
 
 public class AlquilerDaoImpl implements AlquilerDAO {
     public boolean insertar(Alquiler alquiler) {
-        // Validación manual antes de insertar
         if (vehiculoEstaAlquilado(alquiler.getIdVehiculo().getId())) {
             System.out.println("Error: El vehículo ya está alquilado.");
             return false;
@@ -23,8 +22,11 @@ public class AlquilerDaoImpl implements AlquilerDAO {
             em.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            System.out.println("Error al insertar alquiler: " + e.getMessage());
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("Error al insertar: " + e.getMessage());
+            e.printStackTrace();
             return false;
         } finally {
             em.close();
@@ -33,8 +35,7 @@ public class AlquilerDaoImpl implements AlquilerDAO {
     public List<Alquiler> listarTodos() {
         EntityManager em = ConexionBD.getEntityManager();
         try {
-            // Consulta JPQL para traer datos relacionados (JOIN FETCH)
-            String jpql = "SELECT a FROM Alquiler a JOIN FETCH a.idVehiculo v JOIN FETCH a.idCliente c ORDER BY v.marca";
+            String jpql = "SELECT a FROM Alquiler a JOIN FETCH a.idVehiculo JOIN FETCH a.idCliente ORDER BY a.idVehiculo.marca";
             TypedQuery<Alquiler> query = em.createQuery(jpql, Alquiler.class);
             return query.getResultList();
         } catch (Exception e) {

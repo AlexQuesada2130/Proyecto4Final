@@ -1,8 +1,7 @@
 package entity;
 
 import javax.persistence.*;
-
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "alquiler")
@@ -17,11 +16,11 @@ public class Alquiler {
     @ManyToOne(fetch = FetchType.LAZY)
 
     private Cliente idCliente;
-    private Instant fechaContrato;
+    private Timestamp fechaContrato;
 
     public Alquiler() {}
 
-    public Alquiler(Vehiculo v, Cliente c, Instant fecha) {
+    public Alquiler(Vehiculo v, Cliente c, Timestamp fecha) {
         this.idVehiculo = v;
         this.idCliente = c;
         this.fechaContrato = fecha;
@@ -45,10 +44,10 @@ public class Alquiler {
     public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
     }
-    public Instant getFechaContrato() {
+    public Timestamp getFechaContrato() {
         return fechaContrato;
     }
-    public void setFechaContrato(Instant fechaContrato) {
+    public void setFechaContrato(Timestamp fechaContrato) {
         this.fechaContrato = fechaContrato;
     }
 
